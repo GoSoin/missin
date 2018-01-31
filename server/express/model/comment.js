@@ -9,7 +9,7 @@ const dbQuery = require('./db')
  * @param {function} error
  */
 function getCommentList(data, success, error) {
-  let sql = util.format('SELECT DISTINCT id, nickname, avatar, title, content, comm_num, like_num, created_time FROM comments WHERE topic_id = %d ORDER BY created_time DESC LIMIT %d, %d', data.topicId, data.startIndex * data.page, data.page)
+  let sql = util.format('SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE topic_id = %d ORDER BY create_time DESC LIMIT %d, %d', data.topicId, data.startIndex * data.page, data.page)
 
   dbQuery(sql, (err, res) => {
     if(err) throw error
@@ -26,7 +26,7 @@ function getCommentList(data, success, error) {
  * @param {function} error
  */
 function getComment(data, success, error) {
-  let sql = util.format('SELECT DISTINCT id, nickname, avatar, title, content, comm_num, like_num, created_time FROM comments WHERE id = %d', data.id)
+  let sql = util.format('SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE id = %d', data.id)
 
   dbQuery(sql, (err, res) => {
     if(err) throw err

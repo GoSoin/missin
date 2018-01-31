@@ -19,8 +19,30 @@ app             // 客户端app形式
 
 **版本更新记录**
 
+- 2018.01.31 初始版本
+
+服务端(server): express
+
+客户端(client): 无
+
+数据库：MySQL
+
 **约定**
 
 server端口：3xxx
 
 client端口：4xxx或9xxx
+
+**代码提交约定**
+```
+主分支：master
+
+开发分支：develop
+
+功能分支：feature/功能点名称
+
+修复分支：hotfix/修复点名称
+```
+分支合并顺序：feature -> develop -> master
+
+hotfix -> develop & master
