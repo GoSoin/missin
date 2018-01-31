@@ -1,0 +1,21 @@
+{
+  "name": "missin",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Miss in your lost.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ex-server": "node ./server/express/bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoSoin/missin.git"
+  },
+  "author": "GoSoin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GoSoin/missin/issues"
+  },
+  "homepage": "https://github.com/GoSoin/missin#readme"
+}

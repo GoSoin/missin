@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+/** 依赖模块 **/
+const app = require('../app')
+const debug = require('debug')('ex-server:server')
+const http = require('http')
+
+/** 自定义配置 **/
+const config = require('../config')
+
+/** Get port from environment and store in Express. **/
+let port = normalizePort(process.env.PORT || config.port)
+app.set('port', port)
+
+/** Create HTTP Server **/
+const server = http.createServer(app)
+
+/** Listen on provide port, on all network interfaces. **/
+server.listen(port, config.host, () => {
+  console.log('Listening ' + config.host + ' at port: ' + port)
+})
+server.on('error', handleOnError)
+server.on('listening', handleOnListening)
+
+/** Normalize a port into a number, string or false. */
+function normalizePort(port) {
+  let newPort = parseInt(port, 10)
+
+  if(isNaN(newPort)) return port
+
+  if(newPort >= 0) return newPort
+
+  return false
+}
+
+/** Event listener for HTTP server "error" event. **/
+function handleOnError(error) {
+  if(error.syscall !== 'listen') throw error
+
+  let bind = (typeof port === 'string') ? ('Pipe ' + port) : ('Port ' + port)
+
+  // Handle specific listen errors with friendly messages.
+  switch(error.code) {
+    case 'EACCES': 
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
+      break
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use')
+      process.exit(1)
+      break
+    default:
+      throw error
+  }
+}
+
+/** Event listener for HTTP server "listening" event. **/
+function handleOnListening() {
+  let addr = server.address()
+  let bind = (typeof addr === 'string') ? ('Pipe ' + addr) : ('Port ' + addr.port)
+
+  debug('Listening on ' + bind)
+}
