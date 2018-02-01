@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const types = ['get', 'post', 'put']
 
 const API = require('../controller/api')
 const {NOT_FOUND} = require('../common/config')
@@ -22,26 +23,14 @@ router.post('/save/comment', API.saveComment)
 // 点赞评论
 router.put('/update/comment/like', API.updateCommentLike)
 
-// 404 - GET
-router.get('*', (req, res) => {
-  res.end(JSON.stringify({
-    code: NOT_FOUND,
-    message: '接口不存在'
-  }))
-})
-// 404 - POST
-router.post('*', (req, res) => {
-  res.end(JSON.stringify({
-    code: NOT_FOUND,
-    message: '接口不存在'
-  }))
-})
-// 404 - PUT
-router.put('*', (req, res) => {
-  res.end(JSON.stringify({
-    code: NOT_FOUND,
-    message: '接口不存在'
-  }))
+// 404
+types.forEach((type) => {
+  router[type]('*', (req, res) => {
+    res.end(JSON.stringify({
+      code: NOT_FOUND,
+      message: '接口不存在'
+    }))
+  })
 })
 
 module.exports = router
