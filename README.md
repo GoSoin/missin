@@ -58,4 +58,17 @@ hotfix -> develop & master
 
 2. 修复分支：hotfix/修复点名称
 缺陷：git commit -m "fix(修复点名称)：修复点描述 --bug=[bug id] --user=[usernick]"
+
+3. 需求、任务、缺陷本分支提交操作(以需求为例)
+- Add(新增):
+需求：git commit -m "feat(功能点名称)：[Add | A] 功能点新增描述 --story=[story id] --user=[usernick]"
+
+- Update(更新):
+需求：git commit -m "feat(功能点名称)：[Update | U] 功能点更新描述 --story=[story id] --user=[usernick]"
+
+- Delete(删除):
+需求：git commit -m "feat(功能点名称)：[Delete | D] 功能点删除描述 --story=[story id] --user=[usernick]"
+
+- Rollback(回滚):
+需求：git commit -m "feat(功能点名称)：[Rollback | R] 功能点回滚描述 --story=[story id] --user=[usernick]"
 ```
