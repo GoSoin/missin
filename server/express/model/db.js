@@ -3,11 +3,11 @@ const mysql = require('mysql')
 
 /** 创建数据池 **/
 const pool = mysql.createPool({
-  host: 'http://localhost',
+  host: 'localhost',
   port: 3306,
   database: 'missin',
   user: 'missin',
-  password: ''
+  password: '123456'
 })
 
 /** 创建驱动 **/
