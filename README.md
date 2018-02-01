@@ -17,21 +17,46 @@ app             // 客户端app形式
 ```
 对于新增的功能模块或实现方式，请自行补充完善相关文档。
 
+**项目运行**
+
+每个子项目的运行脚本在最外层的`package.json`中有配置，依赖模块则在单独的子项目中。因此，以下为子项目创建及本地运行的具体步骤(推荐但非必须)：
+```
+// 进入子项目所在目录，执行
+npm init
+// 根据提示输入子项目信息，生成子项目的package.json文件
+
+// 在子项目所在目录，执行
+npm install xxx --save/--save-dev
+// 安装子项目依赖
+
+// 对于已存在的子项目，在子项目目录下执行
+npm install
+// 安装子项目依赖
+
+// 切换到根目录下，在package.json中填写子项目的执行脚本
+"scripts": {
+  // 子项目执行脚本命令
+}
+
+// 运行子项目，以server/express为例，在根目录下执行
+npm run ex-server
+```
+
 **版本更新记录**
 
 - 2018.01.31 初始版本
 
-服务端(server): express
-
-客户端(client): 无
-
-数据库：MySQL
+  - 服务端(server): express
+  - 客户端(client): 无
+  - 数据库：MySQL
 
 **约定**
 
+```
 server端口：3xxx
 
 client端口：4xxx或9xxx
+```
 
 **代码提交约定**
 ```
@@ -43,7 +68,9 @@ client端口：4xxx或9xxx
 
 修复分支：hotfix/修复点名称
 ```
-分支合并顺序：feature -> develop -> master
+分支合并顺序：
+
+feature -> develop -> master
 
 hotfix -> develop & master
 
