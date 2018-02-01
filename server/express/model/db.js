@@ -7,7 +7,8 @@ const pool = mysql.createPool({
   port: 3306,
   database: 'missin',
   user: 'missin',
-  password: '123456'
+  password: '123456',
+  dateStrings: true
 })
 
 /** 创建驱动 **/

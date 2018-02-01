@@ -12,19 +12,19 @@ const functionNames = [
 functionNames.forEach(fnName => {
   topic[fnName] = (req, res, next) => {
     topicModel[fnName](
-      req.body,
+      (fnName.indexOf('get') > -1 ? req.query : req.body),
       function success(data) {
         res.end(JSON.stringify({
           status: 200,        // HTTP状态码
-          code: 200,          // 接口状态码
-          message: 'success', // 接口状态说明
-          data: data          // 接口返回数据
+          code: data.code,          // 接口状态码
+          message: 'OK',            // 接口状态说明
+          data: data.data           // 接口返回数据
         }))
       },
-      function error() {
+      function error(err) {
         res.end(JSON.stringify({
-          code: 0,
-          message: 'error'
+          code: err.errno,
+          message: err.code
         }))
       }
     )

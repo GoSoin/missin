@@ -1,71 +1,72 @@
 const util = require('util')
 const dbQuery = require('./db')
+const {SUCCESS_CODE, LOCK_PARAMETER, TYPE_ERROR} = require('../common/config')
 
 /**
  * 获取评论列表
  * @param {Object} data
- * @params {topicId: number, startIndex: number, page: number}
- * @param {function} success
- * @param {function} error
+ * @augments {topicId: number, page: number, per: number}
+ * @return {function} success
+ * @return {function} error
  */
 function getCommentList(data, success, error) {
-  let sql = util.format('SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE topic_id = %d ORDER BY create_time DESC LIMIT %d, %d', data.topicId, data.startIndex * data.page, data.page)
+  data.page = data.page || 1
+  data.per = data.per || 10
+  let sql = util.format(`SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE t_id = %d ORDER BY created_time DESC LIMIT %d, %d`, data.topicId, (data.page - 1) * data.per, data.per)
 
   dbQuery(sql, (err, res) => {
-    if(err) throw error
-
-    res.length > 0 ? success(res) : error()
+    return err ? error(err) : success({data: res, code: SUCCESS_CODE})
   })
 }
 
 /**
  * 获取指定评论
  * @param {Object} data
- * @params {id: number}
- * @param {function} success
- * @param {function} error
+ * @augments {id: number}
+ * @return {function} success
+ * @return {function} error
  */
 function getComment(data, success, error) {
-  let sql = util.format('SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE id = %d', data.id)
+  if(!data || !data.id) return error({errno: LOCK_PARAMETER, code: '缺少参数'})
+  if(typeof data.id !== 'number') return error({errno: TYPE_ERROR, code: '参数类型错误'})
 
+  let sql = util.format(`SELECT DISTINCT id, nickname, avatar, content, reply_name, comm_num, like_num, created_time FROM comments WHERE id = %d`, data.id)
   dbQuery(sql, (err, res) => {
-    if(err) throw err
-
-    res.length > 0 ? success(res) : error()
+    return err ? error(err) : success({data: res, code: SUCCESS_CODE})
   })
 }
 
 /**
  * 发布评论
  * @param {Object} data
- * @params {topicId: string, nickname: string, avatar: string, title: string, content: string}
- * @param {function} success
- * @param {function} error
+ * @augments {topicId: string, reply_name: string, nickname: string, avatar: string, content: string}
+ * @return {function} success
+ * @return {function} error
  */
 function saveComment(data, success, error) {
-  let sql = util.format("INSERT INTO comments(topic_id, nickname, avatar, title, content) VALUES('%d, %s', '%d', '%s', '%s', '%s')", data.topicId, data.nickname, data.avatar, data.title, data.content)
+  if(!data || !data.topicId || !data.reply_name || !data.nickname || !data.content) return error({errno: LOCK_PARAMETER, code: '缺少参数'})
+  if((typeof data.topicId !== 'number') || (typeof data.reply_name !== 'string') || (typeof data.nickname !== 'string') || (typeof data.content !== 'string')) return error({errno: TYPE_ERROR, code: '参数类型错误'})
 
+  let sql = util.format(`INSERT INTO comments(t_id, reply_name, nickname, avatar, content) VALUES(%d, '%s', '%s', '%s', '%s')`, data.topicId, data.reply_name, data.nickname, data.avatar || '', data.content)
   dbQuery(sql, (err, res) => {
-    if(err) throw err
-
-    return res
+    return err ? error(err) : getComment({id: res.insertId}, success, error)
   })
 }
 
 /**
  * 评论点赞
  * @param {Object} data
- * @params {id: number}
- * @param {function} success
- * @param {function} error
+ * @augments {id: number}
+ * @return {function} success
+ * @return {function} error
  */
 function updateCommentLike(data, success, error) {
-  let sql = util.format("UPDATE comments SET like_num = like_num + 1 WHERE id = '%d'", data.topic_id)
+  if(!data || !data.id) return error({errno: LOCK_PARAMETER, code: '缺少参数'})
+  if(typeof data.id !== 'number') return error({errno: TYPE_ERROR, code: '参数类型错误'})
 
+  let sql = util.format(`UPDATE comments SET like_num = like_num + 1 WHERE id = %d`, data.id)
   dbQuery(sql, (err, res) => {
-    if(err) throw err
-
-    return res
+    return err ? error(err) : success({data: [], code: SUCCESS_CODE})
   })
 }
 

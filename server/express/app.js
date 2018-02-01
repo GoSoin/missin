@@ -14,12 +14,6 @@ const router = require('./router')
 /** 创建express应用 **/
 let app = express()
 
-/** View engine setup **/
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'html')
-app.engine('html', ejs.__express)
-ejs.delimiter = '?'
-
 /** 载入 **/
 app.use(logger('dev'))
 app.use(bodyParser.json())
@@ -31,13 +25,6 @@ app.use(session({
   secret: '123456'
 }))
 app.use('/api/v1', router)
-
-/** Catch 404 and forward to error handler **/
-app.use((req, res, next) => {
-  let err = new Error('Not Found')
-  err.status = 404
-  next(err)
-})
 
 /** 'development' error handler: will print stacktrace **/
 if(app.get('env') === 'development') {
