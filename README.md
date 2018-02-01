@@ -35,9 +35,9 @@ client端口：4xxx或9xxx
 
 **代码提交约定**
 ```
-主分支：master
+主分支：master (仅接受develop发起的merge请求和hofix工作流的merge请求)
 
-开发分支：develop
+开发分支：develop (仅接受merge请求)
 
 功能分支：feature/功能点名称
 
@@ -46,3 +46,16 @@ client端口：4xxx或9xxx
 分支合并顺序：feature -> develop -> master
 
 hotfix -> develop & master
+
+**提交信息约定**
+
+获取`源码提交关键字`操作可参考：http://blog.csdn.net/znyaiw/article/details/79212527
+
+```
+1. 功能分支：feature/功能点名称
+需求：git commit -m "feat(功能点名称)：功能点描述 --story=[story id] --user=[usernick]"
+任务：git commit -m "feat(功能点名称)：功能点描述 --task=[task id] --user=[usernick]"
+
+2. 修复分支：hotfix/修复点名称
+缺陷：git commit -m "fix(修复点名称)：修复点描述 --bug=[bug id] --user=[usernick]"
+```
