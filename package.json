@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ex-server": "node ./server/express/bin/www"
+    "ex-server": "node ./server/express/bin/www",
+    "web-mob": "cd web&gulp"
   },
   "repository": {
     "type": "git",
