@@ -1,0 +1,11 @@
+html,
+body {
+  margin: 0;
+}
+header {
+  font-size: .44rem;
+  color: #fff;
+  text-align: center;
+  line-height: .88rem;
+  background-color: #333;
+}

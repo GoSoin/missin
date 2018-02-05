@@ -15,12 +15,12 @@ gulp.task('html', function() {
 
 /** connect启动web服务 **/
 gulp.task('server', function() {
-  gulp.src('./views')
+  gulp.src('./')
       .pipe(webserver({
         ip: 'localhost',
         port: 4000,
         livereload: true,
-        open: '/'
+        open: './views'
       }))
 })
 
